@@ -28,10 +28,24 @@ public class Terminal {
         return "\u001b[0m";
     }
 
+    public static String align(String string, int max){
+
+        String transformedString = string.replaceAll("\u001B|\\[..m|\\[.m","");
+        int len = transformedString.length();
+        int difference;
+        if (len < max) {
+            //both walls and one space takes 3 spaces, + 1 cos of bug or smth dont ask me
+            difference = max-len-4;
+        } else {
+            difference = 0;
+        }
+        return string + " ".repeat(Math.max(0, difference + 1));
+    }
+
     /**
      * Generates rectangle starting from specified (x,y) and going to bottom right
      * @param name {@link String} printed on middle of top bar
-     * @param theme changes colors of the frame, there's few variations:
+     * @param theme changes color scheme of the frame, there's few variations:
      *              <ul><li>Default</li><li>Cyan</li></ul>
      */
     public static void rect(int leftTopX, int leftTopY, int height, int width, String name, String theme){
@@ -61,7 +75,7 @@ public class Terminal {
         moveCursor(leftTopX,leftTopY+1);
         for(int y=0;y<height;y++){
             System.out.print("│"); // left wall
-            moveCursor(leftTopX+width+2,leftTopY+y+1);
+            moveCursor(leftTopX+width+1,leftTopY+y+1);
             System.out.print("│"); // right wall
             moveCursor(leftTopX,wallY);
             wallY++; // go one line down

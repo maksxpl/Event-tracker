@@ -17,24 +17,23 @@ public class Template {
      *  </ul>
      *  files:
      *  <ul>
-     *      <li>config.json</li>  <li>blish.bat</li>  <li>counter.py</li>
+     *      <li>config.json</li>  <li>counter.py</li>
      *  </ul>
      * </ul>
      */
     public static void init() throws IOException{
         File file = new File("src/");
         boolean createdFolder = file.mkdir();
-        if (!createdFolder){initError("Failed to create folder: src/");}
+        if (!createdFolder&&!exist("src/")){initError("Failed to create folder: src/",4);}
 
         configJson();
-        blishBat();
         counterPy();
     }
 
     static void generate(String fileName, String string) throws IOException{
         File f = new File(fileName);
         boolean createdFile = f.createNewFile();
-        if (!createdFile){initError("Failed to create file/s in: src/");}
+        if (!createdFile){initError("Failed to create file/s in: src/",3);}
         try (FileWriter fw = new FileWriter(f)) {
             fw.write(string);
         }
@@ -44,22 +43,15 @@ public class Template {
         if(!exist("src\\config.json")){
             generate("src\\config.json", """
                     {
-                        "BlishPath":"C:\\\\path",
-                        "Gw2Path":"C:\\\\path",
-                        "InstallArc": "false"
+                        "Gw2Path": "C:\\\\path",
+                        "BlishPath": "C:\\\\path",
+                        "InstallBlish": false,
+                        "InstallArc": false
                     }
                     """);
         }
     }
-    static void blishBat() throws IOException {
-        if(!exist("src\\Blish.bat")){
-            generate("src\\Blish.bat", """
-                                @ECHO OFF
-                                cd C:\\Users\\maksk\\Desktop\\Blish.HUD.0.11.4
-                                "Blish HUD.exe"
-                    """);
-        }
-    }
+
     static void counterPy() throws IOException {
             if(!exist("src\\Counter.py")){
                 generate("src\\Counter.py", """

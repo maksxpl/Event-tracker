@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 
+import static com.nukeops.Main.initError;
+
 public class File {
     public static boolean copy(String sourcePath, String targetPath){
         try {
@@ -16,7 +18,7 @@ public class File {
             FileUtils.copyFile(original, copied);
             return true;
         } catch (Exception e){
-            e.printStackTrace();
+            initError(String.valueOf(e),9);
             return false;
         }
     }
@@ -34,7 +36,7 @@ public class File {
              java.io.File b = new java.io.File(file2);
             return FileUtils.contentEquals(a,b);
         } catch (IOException e){
-            e.printStackTrace();
+            initError(String.valueOf(e),8);
             return false;
         }
     }
@@ -47,7 +49,7 @@ public class File {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            initError(String.valueOf(e),7);
         }
     }
 }

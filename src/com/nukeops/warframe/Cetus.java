@@ -8,11 +8,16 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class Cetus {
-    public static String DayState() throws JSONException, IOException {
-        JSONObject a = API.jsonFromURL();
-        String output = API.transform(a,"shortString");
+import static com.nukeops.Coordinate.coordinates;
+import static com.nukeops.other.Terminal.align;
 
-        return(" "+ Color.font("Cetus","yellow")+": "+output+"   ");
+public class Cetus {
+    static int widthWf= coordinates().widthWf;
+    public static String DayState() throws JSONException, IOException {
+        JSONObject jsonObj = API.jsonFromURL();
+        String transformedJson =
+                Color.font("Cetus","yellow")+": "+
+                API.transform(jsonObj,"shortString");
+        return align(transformedJson,widthWf);
     }
 }

@@ -9,80 +9,70 @@ import com.nukeops.warframe.Warframe;
 
 import java.io.IOException;
 
+import static com.nukeops.Coordinate.coordinates;
+import static java.lang.Thread.sleep;
+
 public class Main{
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
         try {
-        init();
-        Coordinate pos=generateFrames();
+        Coordinate pos=init();
         while(true){
-            general(pos.yGen);
-            Gw2(pos.yGw2);
-            wf(pos.yWf);
+            general(pos.yGen+1);
+            Gw2(pos.yGw+1);
+            wf(pos.yWf+1);
+            //noinspection BusyWait
+            sleep(1);
     }   }
         catch (Exception e){
-            e.printStackTrace();
+            initError(String.valueOf(e),0);
     }   }
 
-    static void init() throws IOException {
+    static Coordinate init() throws IOException {
         Template.init();
         Gw2.updateArc();
-
         Terminal.clearScreen();
         Terminal.disableCursor();
+        generateFrames();
+        return coordinates();
     }
     static void Gw2(int y){  Gw2.init(3,y); }
-    static void wf(int y) {  Warframe.init(2,y);  }
-    static Coordinate generateFrames() {
-        Coordinate coord=new Coordinate();
-
-        int x = 0;
-        int y = 1;
-
-        // General
-        coord.yGen = y+1;
-        int height = 3;
-        Terminal.rect(x,y,height,27,Color.font("┤general├","cyan"),"default");
-        int yGw2 = y = y+height;
-        // Gw2
-        coord.yGw2 = yGw2+1;
-        height = 7;
-        Terminal.rect(x,y,height,27,Color.font("┤gw2├","cyan"),"default");
-        Terminal.moveCursor(x+2, y+4); System.out.println("──────── Events ─────────");
-        int yWf = y = y+height;
-        // wf
-        coord.yWf = yWf+1;
-        height = 3;
-        Terminal.rect(x,y,height,27,Color.font("┤wf├","cyan"),"default");
-
-        coord.y = y;
-    return coord;
-    }
-
+    static void wf(int y) {  Warframe.init(4,y);  }
     static void general(int y){
-        Terminal.moveCursor(3,y);
+        Terminal.moveCursor(4,y);
         System.out.print(Time.current());
     }
-    public static void initError(String error){
-        Terminal.moveCursor(1, generateFrames().y+5);
-        System.out.print("──────── Errors ─────────");
-        Terminal.moveCursor(1, generateFrames().y+6);
-        System.out.print(error);
-        generateFrames().y += 1;
-    }
-}
 
-class Coordinate {
-    public int y = 0;
-    public int yGen = 0;
-    public int yGw2 = 0;
-    public int yWf = 0;
+    public static void generateFrames() {
+        Coordinate pos= coordinates();
+        Terminal.rect(pos.xGen,pos.yGen,pos.heightGen,pos.widthGen,
+                Color.font("┤general├","cyan"),"default");
+        Terminal.rect(pos.xGw,pos.yGw,pos.heightGw,pos.widthGw,
+                Color.font("┤gw2├","cyan"),"default");
+        frameDecorator("──────── Events ─────────",pos.xGw+1,pos.yGw+4);
+        Terminal.rect(pos.xWf,pos.yWf,pos.heightWf,pos.widthWf,
+                Color.font("┤wf├","cyan"),"default");
+    }
+    public static void frameDecorator(String decorator,int x,int y){
+        Terminal.moveCursor(x, y);
+        System.out.println(decorator);
+    }
+
+    public static void initError(String error,int code){
+        Terminal.moveCursor(1, coordinates().y+5);
+        System.out.print("──────── Errors ─────────");
+        Terminal.moveCursor(1, coordinates().y+6);
+        System.out.print("Error (code "+code+")| " + error);
+        coordinates().y += 1;
+    }
 }
 
 /*bugs*/
 //DONE(probably) fix path checks
 //DONE fix graphical bugs
-//TODO fix length of status strings
+//DONE replace .exec with ProcessBuilder
+//DONE fix length of status strings but:
+//DONE fix duplicated frame generation
 
 /*features*/
 //DONE update arc dps automatically
@@ -91,19 +81,19 @@ class Coordinate {
 //TODO? add more timers
 //TODO? add themes for rect
 //DONE add frame for general stuff like current time
-//HALF-DONE add frame for errors
+//DONE add frame for errors
 
 /*config*/
 //DONE add config(json?)
-//TODO allow enabling/disabling frames
+//TODO? allow enabling/disabling frames
 //TODO? allow to set x,y of frames?
 //TODO? allow to enable/disable content of frames
 
 /*other*/
 //DONE clear Gw2.init code
 //DONE clear coordinates code in Main
-//TODO make python file modular
+//TODO make Counter.py more modular (allow more timers)
+//KYS make event timer but in java instead of improving Counter.py
 //DONE add on github
 //TODO? add integrity checks
-//KYS make event timer but in java
 

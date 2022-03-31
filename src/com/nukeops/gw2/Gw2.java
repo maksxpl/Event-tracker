@@ -11,9 +11,13 @@ import static com.nukeops.Main.initError;
 import static com.nukeops.other.File.exist;
 
 public class Gw2 {
-
+    // gw
     static String Gw2Path = JSON.parse("Gw2Path");
-    static String InstallArc = JSON.parse("InstallArc");
+    // blish
+    static boolean useBlish = Boolean.parseBoolean(JSON.parse("UseBlish"));
+    static String blishPath = JSON.parse("BlishPath");
+    // arc
+    static boolean InstallArc = Boolean.parseBoolean(JSON.parse("InstallArc"));
     static String arcPath = Gw2Path+"\\bin64\\d3d9.dll";
     static String downloadedArc = "src\\d3d9.dll";
     static Boolean compareArcs = File.compare(arcPath, downloadedArc);
@@ -25,7 +29,7 @@ public class Gw2 {
             arcStatus(x,y);
             events(x,y);
         } catch (Exception e){
-            e.printStackTrace();
+            initError(String.valueOf(e),15);
     }   }
 
     static void gwStatus(int x, int y){
@@ -40,7 +44,7 @@ public class Gw2 {
                 System.out.print(Color.font("Offline", "red"));
             }
         } catch (Exception e){
-            e.printStackTrace();
+            initError(String.valueOf(e),14);
     }   }
 
     static void blishStatus(int x, int y){
@@ -62,37 +66,42 @@ public class Gw2 {
             if (!Blish.installed()) {
                 Terminal.moveCursor(x+9, y+1);
                 System.out.print(Color.font("Not Found", "red"));
-        }   } catch (Exception e){e.printStackTrace();}
+        }   } catch (Exception e){initError(String.valueOf(e),13);}
     }
 
     static void arcStatus(int x, int y) {
         try {
             Terminal.moveCursor(x+1, y+2);
             System.out.print("Arc:");
+            // arc disabled
+            if (!useBlish) {
+                Terminal.moveCursor(x+9, y+2);
+                System.out.print(Color.font("Disabled  ", "red"));
+            }
             // arc not found
-            if (!exist(arcPath)||!exist(downloadedArc)) {
+            if ((!exist(arcPath)||!exist(downloadedArc))&& useBlish) {
                 Terminal.moveCursor(x+9, y+2);
                 System.out.print(Color.font("Not found ", "red"));
-                if (InstallArc.equals("true")){removeArc();updateArc();}
+                if (InstallArc){removeArc();updateArc();}
             }
             // arc outdated
             if (exist(arcPath) && exist(downloadedArc) && !compareArcs) {
                 Terminal.moveCursor(x+9, y+2);
                 System.out.print(Color.font("Outdated  ", "red"));
-                if (InstallArc.equals("true")) {removeArc();updateArc();}
+                if (InstallArc) {removeArc();updateArc();}
             }
             // arc up to date
             Terminal.moveCursor(x+9, y+2);
-            if (InstallArc.equals("true") && compareArcs) {
+            if (InstallArc && compareArcs) {
                 System.out.print(Color.font("Up to date", "green"));
             }
         } catch (Exception e){
-            e.printStackTrace();
+            initError(String.valueOf(e),17);
     }   }
 
     static void events(int x, int y) {
         Terminal.moveCursor(x, y+4);
-        System.out.print(" Drakkar: ");
+        System.out.print(" Dragonstorm: ");
         Process.py();
     }
 
@@ -102,14 +111,14 @@ public class Gw2 {
 
     static void removeArc() {
         boolean removedDownload = File.remove(downloadedArc);
-        if(!removedDownload){initError("Copying file failed");}
+        if(!removedDownload){initError("Copying file failed",11);}
         boolean removedOriginal = File.remove(arcPath);
-        if(!removedOriginal){initError("Copying file failed");}
+        if(!removedOriginal){initError("Copying file failed",12);}
     }
     public static void updateArc() {
         String url = "https://www.deltaconnected.com/arcdps/x64/d3d9.dll";
         File.download(url, downloadedArc);
         boolean copied = File.copy(downloadedArc,arcPath);
-        if(!copied){initError("Copying file failed");}
+        if(!copied){initError("Copying file failed",10);}
     }
 }
