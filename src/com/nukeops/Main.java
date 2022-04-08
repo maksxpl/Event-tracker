@@ -95,5 +95,6 @@ public class Main{
 //TODO make Counter.py more modular (allow more timers)
 //KYS make event timer but in java instead of improving Counter.py
 //DONE add on github
-//TODO? add integrity checks
+//DONE make it public on git
+//TODO? add actions for code tests and changelog generator
 
