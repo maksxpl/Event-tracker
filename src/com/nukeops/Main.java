@@ -82,6 +82,8 @@ public class Main{
 //TODO? add themes for rect
 //DONE add frame for general stuff like current time
 //DONE add frame for errors
+//TODO make event timer in java instead of improving Counter.py
+//TODO ^ check timezone
 
 /*config*/
 //DONE add config(json?)
@@ -93,7 +95,6 @@ public class Main{
 //DONE clear Gw2.init code
 //DONE clear coordinates code in Main
 //TODO make Counter.py more modular (allow more timers)
-//KYS make event timer but in java instead of improving Counter.py
 //DONE add on github
 //DONE make it public on git
 //TODO? add actions for code tests and changelog generator
