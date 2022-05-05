@@ -94,8 +94,10 @@ public class Main{
 /*other*/
 //DONE clear Gw2.init code
 //DONE clear coordinates code in Main
-//TODO make Counter.py more modular (allow more timers)
+//TODO? make Counter.py more modular (allow more timers)
 //DONE add on github
 //DONE make it public on git
-//TODO? add actions for code tests and changelog generator
+//DONE add actions for code tests
+//TODO? changelog generator
+
 
