@@ -13,7 +13,7 @@ Also I've made it for learning purposes, it's my first script I've ever made in 
 - Check time left to events
 - Auto-update ArcDPS
 
-### Todos
+## Todos:
 - More gw2 timers
 - Themes (for whatever reason I've made this idea)
 - Translate the Counter.py to the Java
@@ -22,3 +22,4 @@ Also I've made it for learning purposes, it's my first script I've ever made in 
 - Add option to set x,y of the frames (I-)
 - Add option to disable/enable content of the frames
 - Maybe some changelog generator or something I don't know
+- Perhaps find better way to track the event timers
