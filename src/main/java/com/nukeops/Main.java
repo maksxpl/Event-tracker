@@ -66,38 +66,3 @@ public class Main{
         coordinates().y += 1;
     }
 }
-
-/*bugs*/
-//DONE(probably) fix path checks
-//DONE fix graphical bugs
-//DONE replace .exec with ProcessBuilder
-//DONE fix length of status strings but:
-//DONE fix duplicated frame generation
-
-/*features*/
-//DONE update arc dps automatically
-//DONE add event timer
-//DONE make frames mobile/movable
-//TODO? add more timers
-//TODO? add themes for rect
-//DONE add frame for general stuff like current time
-//DONE add frame for errors
-//TODO make event timer in java instead of improving Counter.py
-//TODO ^ check timezone
-
-/*config*/
-//DONE add config(json?)
-//TODO? allow enabling/disabling frames
-//TODO? allow to set x,y of frames?
-//TODO? allow to enable/disable content of frames
-
-/*other*/
-//DONE clear Gw2.init code
-//DONE clear coordinates code in Main
-//TODO? make Counter.py more modular (allow more timers)
-//DONE add on github
-//DONE make it public on git
-//DONE add actions for code tests
-//TODO? changelog generator
-
-
