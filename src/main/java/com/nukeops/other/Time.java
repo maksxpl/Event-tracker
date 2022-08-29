@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.nukeops.Main.initError;
+
 public class Time {
 
     public static String current(){
@@ -61,7 +63,7 @@ public class Time {
                 returnMsg = minutes+"m";
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            initError(String.valueOf(e),2);
         }
         return returnMsg;
     }

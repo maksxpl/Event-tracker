@@ -4,7 +4,8 @@ import com.nukeops.other.Terminal;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+
+import static com.nukeops.Main.initError;
 
 public class Warframe {
     public static void init(int x, int y){
@@ -12,7 +13,7 @@ public class Warframe {
             Terminal.moveCursor(x, y);
             System.out.print(Cetus.DayState());
         } catch (JSONException|IOException e){
-            e.printStackTrace();
+            initError(String.valueOf(e),1);
         }
     }
 }

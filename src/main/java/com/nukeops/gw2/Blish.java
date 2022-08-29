@@ -6,19 +6,22 @@ import com.nukeops.other.Process;
 import java.io.File;
 import java.io.IOException;
 
+import static com.nukeops.Main.initError;
+
 public class Blish {
+    static String blishPath = JSON.parse("BlishPath");
+
 
     static void run(){
         try {
-            Process.run("src\\Blish.bat");
+            Process.run("Blish HUD.exe",blishPath);
         }
         catch (Exception e){
-            e.printStackTrace();
+            initError(String.valueOf(e),16);
         }
     }
     static boolean installed() {
-        String blishPath = JSON.parse("BlishPath");
-        assert blishPath != null: "corrupted config file";
+        assert blishPath != null: "Can't find in config file: BlishPath";
         File f = new File(blishPath);
         return f.exists();
     }

@@ -8,6 +8,8 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static com.nukeops.Main.initError;
+
 public class JSON {
     public static String parse(String object) {
         try {
@@ -16,7 +18,7 @@ public class JSON {
             JSONObject mJSONObject = new JSONObject(a);
             return (String) mJSONObject.get(object);
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            initError(String.valueOf(e),6);
             return null;
         }
     }
